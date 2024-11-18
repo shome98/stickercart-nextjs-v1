@@ -18,8 +18,9 @@ const Page = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      const signin = await fetch("api/users/register-user", { method: "POST", headers: { "Content-Type": "application/json", }, body: JSON.stringify(formData) });
-      if (signin.status === 200) { setSign(true); }
+    const signin = await fetch("api/users/login-user", { method: "POST", headers: { "Content-Type": "application/json", }, body: JSON.stringify(formData) });
+    if (signin.status === 200) { console.log("created account"); }
+      if (signin.status === 201) { setSign(true); }
       //const signup = await registerUser(formData);
       //console.log(signup);
   };
