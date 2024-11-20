@@ -17,7 +17,7 @@ const productSchema=new Schema<IProduct>({
     image:{type:{url:String}},
     subImages:{type:[{url:String}]},
     inventory:{type:Number,default:0},
-    category:{type:Schema.Types.ObjectId,ref:"Category"},
-    createdBy:{type:Schema.Types.ObjectId,ref:"User"}
+    category:{type:Schema.Types.ObjectId,ref:"Category",required:true},
+    createdBy:{type:Schema.Types.ObjectId,ref:"User",required:true}
 },{timestamps:true});
 export const Product=mongoose.model<IProduct>("Product",productSchema);
