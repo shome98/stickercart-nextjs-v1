@@ -46,6 +46,25 @@ export const {
         })
     ],
     callbacks: {
-        
+        async jwt({token,user}){
+            if(user){
+                token._id=user._id?.toString();
+            }
+            return token;
+        },
+        async session({session,token}){
+            if(token){
+                session.user._id=token._id;
+            }
+            return session;
+        }
+    },
+    session:{
+        strategy:"jwt",
+    },
+    secret:process.env.NEXTAUTH_SECRET,
+    pages:{
+        signIn:"/sin-in",
+        signOut:"/sign-out"
     }
 })
