@@ -8,10 +8,11 @@ export interface IUser extends Document {
   email: string;
   password: string;
   avatar?: {
-    url: string;
-    localPath: string;
+    url?: string;
+    localPath?: string;
   };
   role: string;
+  provider: string;
   isEmailVerified?: boolean;
   refreshToken?: string;
   forgotPasswordToken?: string;
@@ -62,6 +63,7 @@ const userSchema = new Schema<IUser>(
     password: {
       type: String,
       required: [true, "Password is required"],
+      default:"OAuth User",
       minlength: [8, "Password must be at least 8 characters long"],
       maxlength: [100, "Password cannot exceed 100 characters"],
     },
@@ -71,6 +73,7 @@ const userSchema = new Schema<IUser>(
       default: "USER",
       required: true,
     },
+    provider: String,
     isEmailVerified: {
       type: Boolean,
       default: false,
