@@ -4,6 +4,7 @@ import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import GitHub from "next-auth/providers/github";
 import Google from "next-auth/providers/google";
+import { generateToken } from "./genToken";
 
 export const {
   handlers: { GET, POST },
@@ -63,7 +64,9 @@ export const {
                 user._id = savedUser._id?.toString();
                 user.username = savedUser.username;
             }
+            //user = {...existingUser};
             user._id = existingUser._id?.toString();
+            await generateToken(user);
             return true;
         },
         async jwt({token,user}){
@@ -71,7 +74,8 @@ export const {
                 token._id = user._id?.toString();
                 token.username = user.username;
             }
-            //console.log(token);
+            //console.log("from route token:", token);
+            //console.log("access token is-", token.access_token);
             return token;
         },
         async session({session,token}){
@@ -79,6 +83,7 @@ export const {
                 session.user._id = token._id;
                 session.user.username = token.username;
             }
+            //console.log("from route :",session);
             return session;
         }
     },
