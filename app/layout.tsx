@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { montserrat } from "./ui/fonts";
+import { SessionProvider } from "next-auth/react";
 
 
 export const metadata: Metadata = {
@@ -19,8 +20,10 @@ export default function RootLayout({
       <body
         className={`${montserrat.className}antialiased`}
       >
+        <SessionProvider>
         <Navbar/>
-        {children}
+          {children}
+          </SessionProvider>
       </body>
     </html>
   );
