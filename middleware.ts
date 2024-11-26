@@ -35,7 +35,8 @@ export async function middleware(request: NextRequest) {
   const recieved = cookies();
   console.log((await recieved).get("access_token"));
   // // Fetch token from the request
-  // const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  console.log(token);
 
   // if (!token) {
   //   console.log("No token found. Redirecting to /sign-in.");
