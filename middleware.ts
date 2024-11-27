@@ -37,13 +37,14 @@ export async function middleware(request: NextRequest) {
   // // Fetch token from the request
   const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
   console.log(token);
+  console.log("the role is ", token?.role);
 
-  if (!token) {
-    console.log("No token found. Redirecting to /sign-in.");
-    // Redirect unauthenticated users to /sign-in
-    const url = new URL("/dbcheck", request.url);
-    return NextResponse.redirect(url);
-  }
+  // if (!token) {
+  //   console.log("No token found. Redirecting to /sign-in.");
+  //   // Redirect unauthenticated users to /sign-in
+  //   const url = new URL("/dbcheck", request.url);
+  //   return NextResponse.redirect(url);
+  // }
 
   // console.log("Token found. User ID:", token._id); // Log the user ID or token info
   // Allow authenticated users to proceed
