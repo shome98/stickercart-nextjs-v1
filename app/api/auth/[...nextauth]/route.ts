@@ -40,10 +40,13 @@ export const {
                         throw new Error(`No user found with this email ${credentials.identifier}`)
                     }
                     const isPasswordValid = await user.isPasswordCorrect();
-                    if (isPasswordValid) return user;
+                    if (isPasswordValid) {
+                        generateToken(user);
+                        return user;
+                    }
                     else throw new Error("Invalid Password");
                 } catch (error:any) {
-                    throw new Error(error);
+                    throw new Error(` Login error occurred ${error}`);
                 }
             }
         })
@@ -66,6 +69,7 @@ export const {
             }
             //user = {...existingUser};
             user._id = existingUser._id?.toString();
+            user.role = existingUser.role;
             await generateToken(user);
             return true;
         },
@@ -73,6 +77,7 @@ export const {
             if(user){
                 token._id = user._id?.toString();
                 token.username = user.username;
+                token.role = user.role;
             }
             //console.log("from route token:", token);
             //console.log("access token is-", token.access_token);
@@ -92,7 +97,7 @@ export const {
     },
     secret:process.env.NEXTAUTH_SECRET,
     pages:{
-        signIn:"/sin-in",
-        signOut:"/sign-out"
+        signIn:"auth/sign-in",
+        signOut:"auth/sign-out"
     }
 })
