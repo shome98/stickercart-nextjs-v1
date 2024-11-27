@@ -8,4 +8,4 @@ const categorySchema=new Schema<ICategory>({
     title:{type:String, required:true},
     createdBy:{type:Schema.Types.ObjectId,ref:"User"}
 })
-export const Category=mongoose.model<ICategory>("Category",categorySchema);
+export const Category=mongoose.models.Category||mongoose.model<ICategory>("Category",categorySchema);
