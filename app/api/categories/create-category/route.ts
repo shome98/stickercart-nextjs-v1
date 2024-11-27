@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req:NextRequest) {
     try {
-        const { title } = await req.json();
+      const { title } = await req.json();
         const token = await getToken({ req: req, secret: process.env.NEXTAUTH_SECRET });
         if (title) {
             await dbConnect();
@@ -13,8 +13,9 @@ export async function POST(req:NextRequest) {
             if(!exists)
             {
                 const catObj = new Category({ title, createdBy: token?._id });
-                const newCat = await Category.create(catObj);
-                if (newCat) return NextResponse.json({ success: true, data: Category.findById(newCat._id) });
+              const newCat = await Category.create(catObj);
+              const createdCat = await Category.findById(newCat._id);
+                if (newCat) return NextResponse.json({ success: true, data: createdCat });
             }
             return NextResponse.json({ success: false, error: "Category already exists" }, { status: 409 });
         }
